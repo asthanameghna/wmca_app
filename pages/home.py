@@ -3,11 +3,11 @@ import leafmap.foliumap as leafmap
 
 
 def app():
-    st.title("Map")
+    st.title("Welcome to the Demo")
 
     st.markdown(
         """
-    World Map
+    Please click on tabs on the sidebar to get started
     """
     )
 

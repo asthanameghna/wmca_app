@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from pages import home, map, heatmap, epc_rating
+from pages import home, map, heatmap, epc_rating, solar_pv, heating_type
+from streamlit_option_menu import option_menu
 
 header = st.container()
 dataset = st.container()
@@ -34,8 +35,8 @@ with dataset:
     st.header('EPC data')
     epc_data = get_data(pathname+'data/numerical_individual_columns_data.csv')
     st.write(epc_data.head())
-    constituency = pd.DataFrame(epc_data['constituency'].value_counts())
-    st.bar_chart(constituency)
+    current_energy_rating = pd.DataFrame(epc_data['current-energy-rating'].value_counts())
+    st.bar_chart(current_energy_rating)
 
     ####### plotly animation #####
 
@@ -48,10 +49,10 @@ with dataset:
 # st.set_page_config(page_title="Streamlit Geospatial", layout="wide")
 
 pages = [
-        # {"func": home.app, "title": "Home", "icon": "house"},
-        # {"func": heatmap.app, "title": "Heatmap", "icon": "map"}
-        {"func": epc_rating.app, "title": "Heatmap", "icon": "map"},
-        # {"func": map.app, "title": "Home", "icon": "house"}
+        {"func": home.app, "title": "Home", "icon": "house"},
+        {"func": epc_rating.app, "title": "EPC Rating", "icon": "bar-chart-line"},
+        {"func": solar_pv.app, "title": "Solar PV", "icon": "brightness-high"},
+        {"func": heating_type.app, "title": "Heating Type", "icon": "building"}
 ]
 
 
@@ -63,10 +64,23 @@ params = st.experimental_get_query_params()
 
 if "page" in params:
     default_index = int(titles_lower.index(params["page"][0].lower()))
+else:
+    default_index = 0
+
+with st.sidebar:
+    selected = option_menu(
+        "Main Menu",
+        options=titles,
+        icons=icons,
+        menu_icon="cast",
+        default_index=default_index,
+    )    
 
 
 for app in pages:
-    app["func"]()
+    if app["title"] == selected:
+        app["func"]()
+        break
     
 
 
