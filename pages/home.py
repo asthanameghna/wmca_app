@@ -2,7 +2,7 @@ import streamlit as st
 import leafmap.foliumap as leafmap
 
 
-def app():
+def app(epc_data, sample_outputs, predicted):
     st.title("Welcome to the Demo")
 
     st.markdown(

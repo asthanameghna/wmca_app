@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.figure_factory as ff
 from pages import home, map, heatmap, epc_rating, solar_pv, heating_type
 from streamlit_option_menu import option_menu
 
@@ -34,7 +35,11 @@ with header:
 with dataset:
     st.header('EPC data')
     epc_data = get_data(pathname+'data/numerical_individual_columns_data.csv')
-    st.write(epc_data.head())
+    sample_outputs = get_data(pathname+'data/sample_outputs.csv')
+    predicted = get_data(pathname+'data/sample_outputs_old.csv')
+    st.dataframe(epc_data.head())
+    st.header('Sample Outputs data')
+    st.dataframe(sample_outputs.head())
     current_energy_rating = pd.DataFrame(epc_data['current-energy-rating'].value_counts())
     st.bar_chart(current_energy_rating)
 
@@ -79,7 +84,7 @@ with st.sidebar:
 
 for app in pages:
     if app["title"] == selected:
-        app["func"]()
+        app["func"](epc_data, sample_outputs, predicted)
         break
     
 
