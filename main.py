@@ -10,7 +10,7 @@ dataset = st.container()
 features = st.container()
 model_training = st.container()
 
-pathname = '/Users/meghna_mac2/PycharmProjects/WMCA/wmca_app/'  # your pathname
+pathname = './'  # your pathname
 
 st.markdown(
     """
