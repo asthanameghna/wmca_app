@@ -4,6 +4,16 @@ import plotly.express as px
 import plotly.figure_factory as ff
 from pages import home, map, heatmap, epc_rating, solar_pv, heating_type
 from streamlit_option_menu import option_menu
+from email.policy import default
+import leafmap.foliumap as leafmap
+import numpy as np
+from distutils.command import config
+import leafmap.kepler as leafmap
+import geopandas as gpd
+
+
+
+import matplotlib.pyplot as plt
 
 header = st.container()
 dataset = st.container()
