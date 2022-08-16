@@ -8,7 +8,6 @@ from email.policy import default
 import leafmap.foliumap as leafmap
 import numpy as np
 from distutils.command import config
-import leafmap.kepler as leafmap
 import geopandas as gpd
 
 
@@ -44,9 +43,9 @@ with header:
 
 with dataset:
     st.header('EPC data')
-    epc_data = get_data(pathname+'data/numerical_individual_columns_data.csv')
-    sample_outputs = get_data(pathname+'data/sample_outputs.csv')
-    predicted = get_data(pathname+'data/sample_outputs_old.csv')
+    epc_data = get_data(pathname+'data/numerical_individual_columns_data_demo.csv')
+    sample_outputs = get_data(pathname+'data/sample_outputs_demo.csv')
+    predicted = get_data(pathname+'data/sample_outputs_old_demo.csv')
     st.dataframe(epc_data.head())
     st.header('Sample Outputs data')
     st.dataframe(sample_outputs.head())
