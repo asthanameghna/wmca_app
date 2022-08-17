@@ -1,5 +1,5 @@
 import streamlit as st
-import leafmap.foliumap as leafmap
+from pages import map
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -50,17 +50,4 @@ def app(epc_data, sample_outputs, predicted):
         st.write('Land Area: 267.77 km2')
  
 
-      
-
-    m = leafmap.Map(tiles="stamentoner")
-    m.add_heatmap(
-        epc_data,
-        latitude="LATITUDE",
-        longitude="LONGITUDE",
-        value="current-energy-efficiency",
-        name="Heat map",
-        radius=20,
-    )
-    # m.add_legend(epc_data, title='Legend')
-    m.to_streamlit(height=700)
-
+    map.app()

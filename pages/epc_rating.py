@@ -164,4 +164,4 @@ def app(epc_data, sample_outputs, predicted):
     st.table(final)
     # st.table(loc_auth_epc_count)
 
-    heatmap.app("current-energy-efficiency")
+    map.app()

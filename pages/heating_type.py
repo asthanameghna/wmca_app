@@ -2,7 +2,7 @@ import streamlit as st
 # import leafmap.foliumap as leafmap
 import pandas as pd
 import matplotlib.pyplot as plt
-from pages import heatmap
+from pages import map
 
 def app(epc_data, sample_outputs, predicted):
 
@@ -51,4 +51,4 @@ def app(epc_data, sample_outputs, predicted):
  
       
 
-    heatmap.app("current-energy-efficiency")
+    map.app()

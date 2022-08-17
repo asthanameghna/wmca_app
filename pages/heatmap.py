@@ -1,53 +1,23 @@
 import streamlit as st
 import pandas as pd
-import geopandas as gpd
-import pydeck as pdk
+import leafmap.foliumap as leafmap
 
-def app(value):
+def app():
 
     st.title("Heatmap")
     
 
-    PATH = "C:/Users/lilia/Downloads/wmca_download_2022-07-29_10-07-36/files/wmca_prj/project/unzip_files/output/SJ9000.geojson"
-    df = gpd.read_file(PATH, driver='GeoJSON')
-    df["lng"] = df.geometry.centroid.x
-    df["lat"] = df.geometry.centroid.y
+    epc_data = pd.read_csv("/Users/meghna_mac2/PycharmProjects/WMCA/wmca_app/data/numerical_individual_columns_data.csv")
+    epc_rating = [0,20,40,60,80,100]
 
-    xMax, xMin = df.lng.max(), df.lng.min()
-    yMax, yMin = df.lat.max(), df.lat.min()
-    LAND_COVER = [[[xMin, yMin], [xMin, yMax], [xMax, yMax], [xMax, yMin]]]
-
-    st.pydeck_chart(pdk.Deck(
-        map_style=None,
-        initial_view_state=pdk.ViewState(
-            latitude=df['lat'].mean(),
-            longitude=df['lng'].mean(),
-            zoom=12,
-            pitch=50,
-            get_color='[200, 30, 0, 160]',
-        ),
-        layers=[
-            pdk.Layer(
-                "ColumnLayer",
-                data=df,
-                opacity=0.8,
-                extruded=True,
-                flatShading=True,
-                get_elevation="AbsHMax",
-                get_position=['lng','lat'],
-                elevation_scale=1,
-                elevation_range=[0, 1000],
-                radius=5,
-                get_fill_color=f"[255, 255, {value} / 100 * 255]",
-                get_line_color=[255, 255, 255],
-            ),
-            pdk.Layer(
-                "PolygonLayer",
-                LAND_COVER,
-                stroked=False,
-                # processes the data as a flat longitude-latitude pair
-                get_polygon="-",
-                get_fill_color=[0, 0, 0, 20],
-            )
-        ],
-    ))
+    m = leafmap.Map(tiles="stamentoner")
+    m.add_heatmap(
+        epc_data,
+        latitude="LATITUDE",
+        longitude="LONGITUDE",
+        value="current-energy-efficiency",
+        name="Heat map",
+        radius=20,
+    )
+    # m.add_legend(epc_data, title='Legend')
+    m.to_streamlit(height=700)
