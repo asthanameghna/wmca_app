@@ -4,13 +4,14 @@ import plotly.express as px
 import plotly.figure_factory as ff
 from pages import home, map, heatmap, epc_rating, solar_pv, heating_type
 from streamlit_option_menu import option_menu
+import os
 
 header = st.container()
 dataset = st.container()
 features = st.container()
 model_training = st.container()
 
-pathname = '/Users/meghna_mac2/PycharmProjects/WMCA/wmca_app/'  # your pathname
+pathname = os.getcwd()  # your pathname
 
 st.markdown(
     """

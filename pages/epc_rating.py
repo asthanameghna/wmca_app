@@ -1,9 +1,10 @@
 from email.policy import default
 import streamlit as st
-import leafmap.foliumap as leafmap
+# import leafmap.foliumap as leafmap
 import plotly.figure_factory as ff
 import pandas as pd
 import numpy as np
+from pages import heatmap
 
 
 def app(epc_data, sample_outputs, predicted):
@@ -163,17 +164,4 @@ def app(epc_data, sample_outputs, predicted):
     st.table(final)
     # st.table(loc_auth_epc_count)
 
-    
-
-
-    m = leafmap.Map(tiles="stamentoner")
-    m.add_heatmap(
-        epc_data,
-        latitude="LATITUDE",
-        longitude="LONGITUDE",
-        value="current-energy-efficiency",
-        name="Heat map",
-        radius=20,
-    )
-    # m.add_legend(epc_data, title='Legend')
-    m.to_streamlit(height=700)
+    heatmap.app("current-energy-efficiency")

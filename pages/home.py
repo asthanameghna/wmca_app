@@ -1,5 +1,6 @@
 import streamlit as st
-import leafmap.foliumap as leafmap
+#import leafmap.foliumap as leafmap
+from pages import heatmap
 
 
 def app(epc_data, sample_outputs, predicted):
@@ -10,7 +11,8 @@ def app(epc_data, sample_outputs, predicted):
     Please click on tabs on the sidebar to get started
     """
     )
+    
+    heatmap.app('current-energy-efficiency')
+    
 
-    m = leafmap.Map(locate_control=True)
-    m.add_basemap("ROADMAP")
-    m.to_streamlit(height=700)
+    

@@ -1,8 +1,8 @@
 import streamlit as st
-import leafmap.foliumap as leafmap
+# import leafmap.foliumap as leafmap
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from pages import heatmap
 
 def app(epc_data, sample_outputs, predicted):
 
@@ -51,14 +51,4 @@ def app(epc_data, sample_outputs, predicted):
  
       
 
-    m = leafmap.Map(tiles="stamentoner")
-    m.add_heatmap(
-        epc_data,
-        latitude="LATITUDE",
-        longitude="LONGITUDE",
-        value="current-energy-efficiency",
-        name="Heat map",
-        radius=20,
-    )
-    # m.add_legend(epc_data, title='Legend')
-    m.to_streamlit(height=700)
+    heatmap.app("current-energy-efficiency")
