@@ -4,14 +4,22 @@ import plotly.express as px
 import plotly.figure_factory as ff
 from pages import home, map, heatmap, epc_rating, solar_pv, heating_type
 from streamlit_option_menu import option_menu
-import os
+from email.policy import default
+import leafmap.foliumap as leafmap
+import numpy as np
+from distutils.command import config
+import geopandas as gpd
+
+
+
+import matplotlib.pyplot as plt
 
 header = st.container()
 dataset = st.container()
 features = st.container()
 model_training = st.container()
 
-pathname = os.getcwd()  # your pathname
+pathname = './'  # your pathname
 
 st.markdown(
     """
@@ -35,9 +43,9 @@ with header:
 
 with dataset:
     st.header('EPC data')
-    epc_data = get_data(pathname+'data/numerical_individual_columns_data.csv')
-    sample_outputs = get_data(pathname+'data/sample_outputs.csv')
-    predicted = get_data(pathname+'data/sample_outputs_old.csv')
+    epc_data = get_data(pathname+'data/numerical_individual_columns_data_demo.csv')
+    sample_outputs = get_data(pathname+'data/sample_outputs_demo.csv')
+    predicted = get_data(pathname+'data/sample_outputs_old_demo.csv')
     st.dataframe(epc_data.head())
     st.header('Sample Outputs data')
     st.dataframe(sample_outputs.head())
