@@ -9,6 +9,7 @@ import leafmap.foliumap as leafmap
 import numpy as np
 from distutils.command import config
 import geopandas as gpd
+import pydeck as pdk
 
 
 
@@ -66,7 +67,8 @@ pages = [
         {"func": home.app, "title": "Home", "icon": "house"},
         {"func": epc_rating.app, "title": "EPC Rating", "icon": "bar-chart-line"},
         {"func": solar_pv.app, "title": "Solar PV", "icon": "brightness-high"},
-        {"func": heating_type.app, "title": "Heating Type", "icon": "building"}
+        {"func": heating_type.app, "title": "Heating Type", "icon": "building"},
+        {"func": map.app, "title": "Map Demo", "icon": "signpost-split"}
 ]
 
 
