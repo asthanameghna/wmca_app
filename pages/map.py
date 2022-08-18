@@ -11,7 +11,7 @@ def app(epc_data, sample_outputs, predicted):
     """
     )
 
-    PATH = "/Users/meghna_mac2/PycharmProjects/WMCA/wmca_app/data/SJ9000.geojson"
+    PATH = "/data/SJ9000.geojson"
     df = gpd.read_file(PATH, driver='GeoJSON')
     df["lng"] = df.geometry.centroid.x
     df["lat"] = df.geometry.centroid.y
