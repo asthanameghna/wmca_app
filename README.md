@@ -108,17 +108,13 @@ A: Yes, this is the intended behavior. the administration menu module only loads
    its stylesheet as needed (i.e., on page requests by logged-on, administrative
    users).
    
-MAINTAINERS
+MAINTAINERS & COLLAOBRATORS
 -----------
 
-Current maintainers:
- * Daniel F. Kudwien (sun) - https://www.drupal.org/user/54136
- * Peter Wolanin (pwolanin) - https://www.drupal.org/user/49851
- * Stefan M. Kudwien (smk-ka) - https://www.drupal.org/user/48898
- * Dave Reid (Dave Reid) - https://www.drupal.org/user/53892
+Please reach out to us if you have any questions:
+ * Meghna Asthana (University of York) https://www.cs.york.ac.uk/people/asthana
+ * Li-Lian Ang (Minerva University) https://www.linkedin.com/in/anglilian/
 
 This project has been sponsored by:
- * UNLEASHED MIND
-   Specialized in consulting and planning of Drupal powered sites, UNLEASHED
-   MIND offers installation, development, theming, customization, and hosting
-   to get you started. Visit https://www.unleashedmind.com for more information.
+ * Data Science For Social Good Program at University of Warwick
+   Visit [DSSG Warwick](https://warwick.ac.uk/research/data-science/warwick-data/dssgx/) for more information.
