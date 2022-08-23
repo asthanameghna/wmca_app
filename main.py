@@ -73,7 +73,7 @@ def load_data(path):
     return df
 
 # Load all data
-data = load_data("data\\data.geojson")
+data = load_data("data/data.geojson")
 
 with open('data/dictionaries/groups.pickle', 'rb') as handle:
     groups = pickle.load(handle)
@@ -97,7 +97,7 @@ with tab1:
 
     with column1:
         epc_df, epc_norm = EPC_map_data(data)
-        render_map.app(epc_df, epc_norm)
+        render_map.app(epc_df, epc_norm,'current-energy-efficiency')
 
     with column2:
         st.subheader('Area Summary')
@@ -135,7 +135,7 @@ with tab2:
 
     with column1:
         pv_df, pv_norm = pv_map_data(data)
-        render_map.app(pv_df, pv_norm)
+        render_map.app(pv_df, pv_norm,'pv_output')
 
     with column2:
         st.subheader('Area Summary')
@@ -153,7 +153,7 @@ with tab3:
 
     with column1:
         heating_df, heating_norm = heating_map_data(data)
-        render_map.app(heating_df, heating_norm)
+        render_map.app(heating_df, heating_norm,'additional_peak_load')
 
     with column2:
         st.subheader('Area Summary')
@@ -162,5 +162,5 @@ with tab3:
         st.write('Land Area: 267.77 km2')  
 
     with column3:
-        pv_output = pd.DataFrame(data['pv_output'].value_counts())
-        st.bar_chart(pv_output, x='PV Output kWhr/year')
+        additional_peak_load = pd.DataFrame(data['additional_peak_load'].value_counts())
+        st.bar_chart(pv_output)

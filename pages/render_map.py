@@ -66,9 +66,7 @@ def plot_map(df):
             tooltip=tooltip,
         ))
     
-def app(df, norm):
-    value='current-energy-efficiency'
-    
+def app(df, norm, value):    
     plot_map(df)
     insert_color_bar(norm, value)
 
