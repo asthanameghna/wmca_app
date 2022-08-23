@@ -1,106 +1,132 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.figure_factory as ff
-from pages import home, map, heatmap, epc_rating, solar_pv, heating_type
-from streamlit_option_menu import option_menu
-from email.policy import default
-# import leafmap.foliumap as leafmap
-import numpy as np
-from distutils.command import config
+from pages import render_map
 import geopandas as gpd
-import pydeck as pdk
+from shapely.geometry import mapping
+import matplotlib
+import numpy as np
+import pickle
 
-import matplotlib.pyplot as plt
-
-header = st.container()
-dataset = st.container()
-features = st.container()
-model_training = st.container()
-
-pathname = './'  # your pathname
-
-st.markdown(
-    """
-    <style>
-    .main {
-        background-color: F5F5F
-    }
-    </style>
-    """,
-    unsafe_allow_html = True
-)
+st. set_page_config(layout="wide")
 
 @st.cache
 def get_data(filename):
     data = pd.read_csv(filename)
     return data
 
-with header:
-    st.title('WMCA - Pure LeapFrog Demo')
-    st.text('')
+def listit(t):
+    return list(map(listit, t)) if isinstance(t, (list, tuple)) else t
 
-with dataset:
-    st.header('EPC data')
-    epc_data = get_data(pathname+'data/numerical_individual_columns_data_demo.csv')
-    sample_outputs = get_data(pathname+'data/sample_outputs_demo.csv')
-    predicted = get_data(pathname+'data/sample_outputs_old_demo.csv')
-    st.dataframe(epc_data.head())
-    st.header('Sample Outputs data')
-    st.dataframe(sample_outputs.head())
-    current_energy_rating = pd.DataFrame(epc_data['current-energy-rating'].value_counts())
-    st.bar_chart(current_energy_rating)
+def get_rgb(x, cmap, norm):
+    color = np.array(cmap(norm((x))))[:3]
+    color = 255 * color
+    return list(color)
 
-    ####### plotly animation #####
-
-    # epc_data['construction-age-band'] = pd.to_datetime(epc_data['construction-age-band']).dt.strftime('%Y-%m-%d')
-    # construction_age_band = epc_data['construction-age-band'].unique().tolist()
-    # fig1 = px.scatter(epc_data, x='constituency', y='mean_counsumption', animation_frame='construction-age-band')
-    # st.write(fig1)  
-
-######## maps ####
-# st.set_page_config(page_title="Streamlit Geospatial", layout="wide")
-
-pages = [
-        {"func": home.app, "title": "Home", "icon": "house"},
-        {"func": epc_rating.app, "title": "EPC Rating", "icon": "bar-chart-line"},
-        {"func": solar_pv.app, "title": "Solar PV", "icon": "brightness-high"},
-        {"func": heating_type.app, "title": "Heating Type", "icon": "building"},
-        {"func": map.app, "title": "Map Demo", "icon": "signpost-split"}
-]
-
-
-titles = [app["title"] for app in pages]
-titles_lower = [title.lower() for title in titles]
-icons = [app["icon"] for app in pages]
-
-params = st.experimental_get_query_params()
-
-if "page" in params:
-    default_index = int(titles_lower.index(params["page"][0].lower()))
-else:
-    default_index = 0
-
-with st.sidebar:
-    selected = option_menu(
-        "Main Menu",
-        options=titles,
-        icons=icons,
-        menu_icon="cast",
-        default_index=default_index,
-    )    
-
-
-for app in pages:
-    if app["title"] == selected:
-        app["func"](epc_data, sample_outputs, predicted)
-        break
+@st.cache
+def EPC_map_data():
+    PATH = "C:/Users/lilia/Documents/GitHub/WMCA/DSSG_WMCA/data/processed/output/SJ9000.geojson"
+    df = gpd.read_file(PATH, driver="GeoJSON")
+    df["lng"] = df.geometry.centroid.x
+    df["lat"] = df.geometry.centroid.y
+    listed_coords = [listit(mapping(g)["coordinates"]) for g in df.geometry]
+    df = pd.DataFrame(df)
+    df.geometry = listed_coords
     
+    results = pd.read_csv("data/full_dataset_outputs.csv")
+    df = df[['lat','lng','geometry', 'postcode','uprn']].merge(results[['uprn','current-energy-efficiency']], on='uprn', how='left')
+    df = df.dropna()
+    
+    value = 'current-energy-efficiency'
+    cmap = matplotlib.cm.get_cmap('RdYlGn')
+    norm = matplotlib.colors.Normalize(vmin=20, vmax=100)
+    
+    df['fill_color'] = df[value].apply(lambda row: get_rgb(row, cmap, norm))
 
+    return df, norm
 
-# with features:
-#     st.header('feature')
+@st.cache
+def pv_map_data():
+    PATH = "data\\building_pv.geojson"
+    df = gpd.read_file(PATH, driver="GeoJSON")
+    df["lng"] = df.geometry.centroid.x
+    df["lat"] = df.geometry.centroid.y
+    listed_coords = [listit(mapping(g)["coordinates"]) for g in df.geometry]
+    df = pd.DataFrame(df)[['lat', 'lng', 'geometry', 'pv_output']]
+    df.geometry = listed_coords
+    
+    value = 'pv_output'
+    cmap = matplotlib.cm.get_cmap('RdYlGn')
+    norm = matplotlib.colors.Normalize(vmin=df['pv_output'].quantile(0.05), vmax=df['pv_output'].quantile(0.95))
+    
+    df['fill_color'] = df[value].apply(lambda row: get_rgb(row, cmap, norm))
 
+    return df, norm
 
-# with model_training:            
-#     st.header('model')
+@st.cache
+def load_data(path, extension):
+    if extension == "csv":
+        df = pd.read_csv(path)
+    elif extension == 'geojson':
+        df = gpd.read_file(path, driver="GeoJSON")
+    return df
+
+with open('data/dictionaries/groups.pickle', 'rb') as handle:
+    groups = pickle.load(handle)
+group_names = [key for key in groups.keys()]
+group_tag = [value for value in groups.values()]
+
+with open('data/dictionaries/local_authority.pickle', 'rb') as handle:
+    local_authority = pickle.load(handle)
+
+with open('data/dictionaries/property_types.pickle', 'rb') as handle:
+    property_types = pickle.load(handle)
+
+with open('data/dictionaries/local_authority_tag.pickle', 'rb') as handle:
+    local_authority_tag = pickle.load(handle)
+
+tab1, tab2, tab3 = st.tabs(['EPC Rating 🏠', "Solar PV ☀️", "Heating Type ⚡️"])
+
+with tab1:
+    st.header("EPC Rating 🏠")
+    epc_data = load_data("data\\full_dataset_outputs.csv", 'csv')
+    column1, column2, column3 = st.columns([2,1,1])
+
+    with column1:
+        epc_df, epc_norm = EPC_map_data()
+        render_map.app(epc_df, epc_norm)
+
+    with column2:
+        st.subheader('Area Summary')
+        st.write('Population Density: 3649 people/km2')
+        st.write('Total Houses: 434,190')
+        st.write('Land Area: 267.77 km2')    
+
+    with column3:
+        choice_group_x = st.selectbox('Group by X', (group_names))
+        choice_group_y = st.selectbox('Group by Y', (group_names))
+        st.write('You selected: ', choice_group_x, ' for X-axis and ', choice_group_y, ' for Y-axis')
+        
+        group = pd.DataFrame({'X value': epc_data[groups[choice_group_x]], 
+                            'Y value': epc_data[groups[choice_group_y]]})
+        st.bar_chart(group.groupby(['X value']).mean())
+
+with tab2:
+    st.header("Solar PV ☀️")
+    solar_data = load_data("data\\building_pv.geojson", 'geojson')
+    column1, column2, column3 = st.columns([2,1,1])
+
+    with column1:
+        pv_df, pv_norm = pv_map_data()
+        render_map.app(pv_df, pv_norm)
+
+    with column2:
+        st.subheader('Area Summary')
+        st.write('Population Density: 3649 people/km2')
+        st.write('Total Houses: 434,190')
+        st.write('Land Area: 267.77 km2')  
+
+    with column3:
+        st.subheader("NA")
+
+with tab3:
+    st.header("Heating Type ⚡️")

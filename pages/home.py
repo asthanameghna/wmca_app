@@ -1,6 +1,6 @@
 import streamlit as st
 #import leafmap.foliumap as leafmap
-from pages import map
+from pages import render_map
 
 
 def app(epc_data, sample_outputs, predicted):
@@ -12,7 +12,7 @@ def app(epc_data, sample_outputs, predicted):
     """
     )
 
-    map.app()
+    render_map.app()
     
 
     

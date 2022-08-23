@@ -1,4 +1,3 @@
-from email.policy import default
 import streamlit as st
 # import leafmap.foliumap as leafmap
 import plotly.figure_factory as ff
