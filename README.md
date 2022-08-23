@@ -128,7 +128,7 @@ RECOMMENDED TUTORIALS
  * [Developing a Streamlit Web App for Geospatial Applications](https://www.youtube.com/watch?v=fTzlyayFXBM)
 
    
- TROUBLESHOOTING
+<!--  TROUBLESHOOTING
 ---------------
 
  * If the menu does not display, check the following:
@@ -146,7 +146,7 @@ Q: I enabled "Aggregate and compress CSS files", but admin_menu.css is still
 
 A: Yes, this is the intended behavior. the administration menu module only loads
    its stylesheet as needed (i.e., on page requests by logged-on, administrative
-   users).
+   users). -->
    
 MAINTAINERS & COLLAOBRATORS
 -----------
