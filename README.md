@@ -47,14 +47,18 @@ This module requires the following modules:
 
 For specific versions, please refer to [requirements](https://github.com/asthanameghna/wmca_app/blob/main/requirements.txt) file.
 
-INSTALLATION
+INSTALLATION ON LOCAL DEVICE
 ------------
  
- * Install as you would normally install a contributed Drupal module. Visit
-   https://www.drupal.org/node/895232/ for further information.
+ * Download the entire project either using git clone or download as zip option.
 
- * You may want to disable Toolbar module, since its output clashes with
-   Administration Menu.
+ * Once the folder is on your local device, open a new terminal window check the version of python on you device using ```python -v``` and install the compatible pip version for it.
+ 
+ * Now check version of pip using ```pip -version``` and navigate to your project folder
+ 
+ * Install all the packages in requirements.txt using pip (links for each installation command provided above).
+ 
+ * 
    
 CONFIGURATION
 -------------
