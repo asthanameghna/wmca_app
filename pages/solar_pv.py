@@ -1,5 +1,5 @@
 import streamlit as st
-from pages import map
+from pages import render_map
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -50,4 +50,4 @@ def app(epc_data, sample_outputs, predicted):
         st.write('Land Area: 267.77 km2')
  
 
-    map.app()
+    render_map.app()
