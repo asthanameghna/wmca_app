@@ -7,12 +7,12 @@ CONTENTS OF THIS FILE
 ---------------------
 
  * Introduction
+ * Folder Structrue
  * Requirements
- * Recommended modules
- * Installation
- * Configuration
- * Troubleshooting
- * FAQ
+ * Installation on Local Device
+ * Running on Local Device
+ * Deploying your Dashboard
+ * Recommended Tutorials
  * Maintainers
 
 INTRODUCTION
@@ -27,8 +27,31 @@ countries, given they have the correct data.
 The repository for the machine learning algorithms can be accessed [here](https://github.com/mikecoughlan/DSSG_WMCA).
 
 
-DATA SCHEMA
+FOLDER STRUCTURE
 ------------
+```
+.
+├── data                                           
+│   ├── SJ9000.geojson                             # Map shapefile data
+│   ├── full_dataset_outputs.csv                   # Map tabular data
+│   ├── numerical_individual_columns_data_demo.csv # EPC Ratings data
+│   ├── sample_outputs_demo.csv                    # Electric Heating data
+│   └── sample_outputs_old_demo.csv                # Predicted Electric Heating data
+├── images
+│   ├── pure_leapfrog.png
+│   ├── wmca.png
+├── pages
+│   ├── epc_rating.py                              # EPC Rating Prediction Model Page
+│   ├── heating_type.py                            # Electric Heating Prediction Model Page
+│   ├── heatmap.py                                 # Mother file for all heatmaps
+│   ├── home.py                                    # Homepage
+│   ├── map.py                                     # Mother file for all maps               
+│   ├── solar_pv.py                                # Solar PV Prediction Model Page
+├── LICENSE.md
+├── README.md
+├── main.py                                        # Main app runner file
+└── requirements.txt                               # Required packages to run the app
+```
    
 REQUIREMENTS
 ------------
