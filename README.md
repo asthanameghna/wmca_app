@@ -26,11 +26,14 @@ countries, given they have the correct data.
 
 The repository for the machine learning algorithms can be accessed [here](https://github.com/mikecoughlan/DSSG_WMCA).
 
+
+DATA SCHEMA
+------------
    
 REQUIREMENTS
 ------------
 
-This module requires the following modules:
+This project requires the following modules:
 
  * [pip](https://pip.pypa.io/en/stable/installation/)
  * [streamlit](https://pypi.org/project/streamlit/)
@@ -91,6 +94,32 @@ RUNNING ON LOCAL DEVICE
  * Now you can navigate the app to explore more and create your own changes. (A preferable IDE for editing could be Visual Studio Code, PyCharm or Sublime).
  
  
+ DEPLOYING YOUR DASHBOARD
+------------
+ 
+ * Sign up to [Streamlit Cloud](https://streamlit.io/cloud) using your GitHub account. It is invitation based so you might need to wait to get you account. It is advised to do this step in advance.
+
+ * You will recieve an invitation to you github email and follow the steps as mentioned.
+ 
+   <img width="586" alt="welcome_streamlitcloud" src="https://user-images.githubusercontent.com/34877328/186226007-54c95a18-7ce1-4ce1-adbd-334a4a991279.png">
+
+ 
+ * If you have made any changes to the code and introduced new packages, you will need to update the ```requirements.txt``` file. For this, open a new terminal window and navigate to the project folder. Use the command  ```pip install pipreqs``` which will install the 
+ [pipreqs](https://pypi.org/project/pipreqs/) for creating the ```requirements.txt``` file. Finally, use command ```pipreqs --force``` to overwrite the old ```requirements.txt``` file.
+ 
+ * Update your GitHub repository with the current code on your local machine.
+ 
+ * Now sign back in to your streamlit.io account and follow the instructions provided in the video below. (Instead of using ```streamlit_app.py``` as your Main Path use ```main.py``` - same as local device)
+ 
+
+   https://user-images.githubusercontent.com/34877328/186225645-fb439789-ee4b-40e3-9c65-1362ec80d5b6.mp4
+
+
+ * Once deployed, you should be able to share the dashboard using the url.
+ 
+   <img width="1428" alt="Screenshot 2022-08-23 at 18 38 52" src="https://user-images.githubusercontent.com/34877328/186227305-c8225750-7605-42cd-a094-573d85f5ffe7.png">
+   
+   
 RECOMMENDED TUTORIALS 
 -------------
 
