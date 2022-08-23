@@ -89,6 +89,14 @@ RUNNING ON LOCAL DEVICE
    ```
  
  * Now you can navigate the app to explore more and create your own changes. (A preferable IDE for editing could be Visual Studio Code, PyCharm or Sublime).
+ 
+ 
+RECOMMENDED TUTORIALS 
+-------------
+
+ * [A Beginner's Guide to Streamlit](https://www.youtube.com/playlist?list=PLM8lYG2MzHmRpyrk9_j9FW0HiMwD9jSl5)
+
+ * [Developing a Streamlit Web App for Geospatial Applications](https://www.youtube.com/watch?v=fTzlyayFXBM)
 
    
  TROUBLESHOOTING
