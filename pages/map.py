@@ -23,14 +23,14 @@ def listit(t):
 
 @st.cache(allow_output_mutation=True)
 def load_data(value):
-    df = gpd.read_file("../data/SJ9000.geojson", driver="GeoJSON")
+    df = gpd.read_file("./data/SJ9000.geojson", driver="GeoJSON")
     df["lng"] = df.geometry.centroid.x
     df["lat"] = df.geometry.centroid.y
     listed_coords = [listit(mapping(g)["coordinates"]) for g in df.geometry]
     df = pd.DataFrame(df)
     df.geometry = listed_coords
     
-    results = pd.read_csv("../data/full_dataset_outputs.csv")
+    results = pd.read_csv("./data/full_dataset_outputs.csv")
     df = df.merge(results[['uprn','current-energy-efficiency']], on='uprn', how='left')
     df = df.dropna(axis=1)
 
@@ -100,7 +100,7 @@ def render_map(df):
             tooltip=tooltip,
         ))
     
-def app(value="current-energy-efficiency"):
+def app(epc_data, sample_outputs, predicted):
     st.title("Map")
 
     st.markdown(
@@ -109,9 +109,10 @@ def app(value="current-energy-efficiency"):
     """
     )
 
+    value='current-energy-efficiency'
+
     df, cmap, norm = load_data(value)
     
     render_map(df)
     insert_color_bar(cmap, norm, value)
 
-app()
