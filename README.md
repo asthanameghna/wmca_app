@@ -58,35 +58,38 @@ INSTALLATION ON LOCAL DEVICE
  
  * Install all the packages in requirements.txt using pip (links for each installation command provided above).
  
- * 
+ * Check for correct installation in your desired folder using the following commands:
+   ```$ python```
+   and it will show the follwing message:
+   ```
+   Python 3.8.8 (default, Apr 13 2021, 12:59:45) 
+   [Clang 10.0.0 ] :: Anaconda, Inc. on darwin
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>>
+    ```
+   Use command
+   ```
+   import streamlit
+   ```
+   If the respose does not provide any error you have successfully installed all the      dependencies.
    
-CONFIGURATION
+RUNNING ON LOCAL DEVICE
 -------------
  
- * Configure the user permissions in Administration » People » Permissions:
+ * Open a new Terminal window and navigate to the project folder. Use command
+   ```
+   streamlit main.py
+   ```
+   This would provide you a localhost link where the app is running. Something like this
+   ```
+   You can now view your Streamlit app in your browser.
 
-   - Use the administration pages and help (System module)
+   Local URL: http://localhost:8501
+   Network URL: http://192.168.0.24:8501
+   ```
+ 
+ * Now you can navigate the app to explore more and create your own changes. (A preferable IDE for editing could be Visual Studio Code, PyCharm or Sublime).
 
-     The top-level administration categories require this permission to be
-     accessible. The administration menu will be empty unless this permission
-     is granted.
-
-   - Access administration menu
-
-     Users with this permission will see the administration menu at the top of
-     each page.
-
-   - Display Drupal links
-
-     Users with this permission will receive links to drupal.org issue queues
-     for all enabled contributed modules. The issue queue links appear under
-     the administration menu icon.
-
- * Customize the menu settings in Administration » Configuration and modules »
-   Administration » Administration menu.
-
- * To prevent administrative menu items from appearing twice, you may hide the
-   "Management" menu block.
    
  TROUBLESHOOTING
 ---------------
