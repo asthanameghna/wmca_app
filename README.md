@@ -18,24 +18,34 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 
-The Administration Menu module displays the entire administrative menu tree
-(and most local tasks) in a drop-down menu, providing administrators one- or
-two-click access to most pages.  Other modules may also add menu links to the
-menu using hook_admin_menu_output_alter().
+The project provides a dashboard for visualising and finding clean energy potential 
+areas in the WMCA local authority. The tool acts as a frontend to the all the machine 
+learning models build to pin point areas of interest in a local authority. The project
+and code is open sourced and can be used by any local authority in the U.K. and other 
+countries, given they have the correct data.
 
- * For a full description of the module, visit the project page:
-   https://www.drupal.org/project/admin_menu
+The repository for the machine learning algorithms can be accessed [here](https://github.com/mikecoughlan/DSSG_WMCA).
 
- * To submit bug reports and feature suggestions, or track changes:
-   https://www.drupal.org/project/issues/admin_menu
    
 REQUIREMENTS
 ------------
 
 This module requires the following modules:
 
- * [Views](https://www.drupal.org/project/views)
- * [Panels](https://www.drupal.org/project/panels)
+ * [pip](https://pip.pypa.io/en/stable/installation/)
+ * [streamlit](https://pypi.org/project/streamlit/)
+ * [pandas](https://pypi.org/project/pandas/)
+ * [plotly express](https://pypi.org/project/plotly-express/)
+ * [plotly](https://pypi.org/project/plotly/)
+ * [streamlit options menu](https://pypi.org/project/streamlit-option-menu/)
+ * [leafmap](https://pypi.org/project/leafmap/)
+ * [numpy](https://pypi.org/project/numpy/)
+ * [geopandas](https://geopandas.org/en/stable/getting_started/install.html)
+ * [pydeck](https://pypi.org/project/pydeck/)
+ * [shapely](https://pypi.org/project/Shapely/)
+ * [matplotlib](https://pypi.org/project/matplotlib/)
+
+For specific versions, please refer to [requirements](https://github.com/asthanameghna/wmca_app/blob/main/requirements.txt) file.
 
 INSTALLATION
 ------------
