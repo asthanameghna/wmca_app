@@ -165,6 +165,10 @@ with tab1:
 
     with column1:
         epc_df, epc_norm = EPC_map_data(data)
+        st.markdown("""
+    Map available on Local Device only 
+    
+    """)
         ####### Uncoment to render map on Local device ######        
 #         render_map.app(epc_df, epc_norm, 'Current Energy Efficiency (%)')
 
@@ -231,7 +235,10 @@ with tab1:
         else:
             loc_auth_epc_rating.append('A')
     
-
+st.markdown("""
+    Table available on Local Device only 
+    
+    """)
 
     ####### Uncoment to render table on Local device ######
 
@@ -254,6 +261,10 @@ with tab2:
 
     with column1:
         pv_df, pv_norm = pv_map_data(data)
+        st.markdown("""
+    Map available on Local Device only 
+    
+    """)
         ####### Uncoment to render map ###### 
 #         render_map.app(pv_df, pv_norm, 'Current Solar PV Output (kWhr/year)')
 
@@ -311,6 +322,10 @@ with tab3:
 
     with column1:
         heating_df, heating_norm = heating_map_data(data)
+        st.markdown("""
+    Map available on Local Device only 
+    
+    """)
         ####### Uncoment to render map ###### 
 #         render_map.app(heating_df, heating_norm, 'Current Electric Heating Load (kWhr)')
 
@@ -356,7 +371,10 @@ with tab3:
         st.write('Total output: ', per_output, ' MWh')
         st.write('Houses with Electric Heating: ', per_house)
 
-
+   st.markdown("""
+    Table available on Local Device only 
+    
+    """)
       ####### Uncoment to render table on Local device ######
 
 #     final = pd.DataFrame(sample_outputs.groupby(['original-local-authority'])['uprn'].count())
