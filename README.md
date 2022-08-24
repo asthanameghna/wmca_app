@@ -73,6 +73,8 @@ This project requires the following modules:
 
 For specific versions, please refer to [requirements](https://github.com/asthanameghna/wmca_app/blob/main/requirements.txt) file.
 
+The data format is a .geojson file with the building footprint to view the 3D map. The code will parse the coordinates into an acceptable form for pydeck. The 3D map will reduce the speed of the web app, so if you opt to use a different map, please see `render_map.py`, to switch the form of the map.
+
 INSTALLATION ON LOCAL DEVICE
 ------------
  
