@@ -1,14 +1,20 @@
 import streamlit as st
 import pandas as pd
-from pages import render_map
+from scripts import render_map, about
 import geopandas as gpd
 from shapely.geometry import mapping
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import json
+from pandas.api.types import is_numeric_dtype
+import plotly.figure_factory as ff
+import plotly.express as px
 
 st. set_page_config(layout="wide")
+
+# Set sidebar
+about.app()
 
 @st.cache
 def get_data(filename):
@@ -89,10 +95,16 @@ with open('data/dictionaries/property_types.json', 'rb') as handle:
 with open('data/dictionaries/local_authority_tag.json', 'rb') as handle:
     local_authority_tag = json.load(handle)
 
+st.header("Targeting Houses for Retrofit in the West Midlands")
+
 tab1, tab2, tab3 = st.tabs(['EPC Rating 🏠', "Solar PV ☀️", "Heating Type ⚡️"])
 
 with tab1:
     st.header("EPC Rating 🏠")
+    st.markdown("""
+    Only 40\% of the houses in the West Midlands have an Energy Performance Certificate (EPC). We predicted the remaining 60\% using a random forest and similarity quantification model (which matches houses based on similar features) with a 55.47\% accuracy. Our accuracy was severely limited by the computational power we had available.
+    
+    """)
     column1, column2 = st.columns([2,2])
 
     with column1:
@@ -127,14 +139,31 @@ with tab1:
         st.write('You selected: ', choice_group_x, ' for X-axis and ', choice_group_y, ' for Y-axis')  
       
     with column2:
+        x_group = data[groups[choice_group_x]]
+        y_group = data[groups[choice_group_y]]
         group = pd.DataFrame({
-            'X value': data[groups[choice_group_x]], 
-            'Y value': data[groups[choice_group_y]]
-            })
-        st.bar_chart(group.groupby(['X value']).mean())
+                choice_group_x: x_group, 
+                choice_group_y: y_group
+                    }).groupby(choice_group_x).mean()
+
+        # if is_numeric_dtype(x_group) == False and is_numeric_dtype(y_group) == True:
+        #     st.bar_chart(group.groupby([choice_group_x]).mean())
+        # elif is_numeric_dtype(x_group) == True and is_numeric_dtype(y_group) == True:
+        # hist_data = [grp[1][choice_group_y] for grp in group]
+        # print(hist_data[0])
+        # group_labels = [grp[0] for grp in group]
+        # print(group_labels)
+        # fig = ff.create_distplot(
+        #         hist_data, group_labels)
+        # st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
     st.header("Solar PV ☀️")
+    st.markdown("""
+    We estimated the annual solar PV output for houses in the West Midlands using the calculations from [pvlib](https://pvlib-python.readthedocs.io/en/stable/index.html) which are within the same order of magnitude as estimates given by the Microgeneration Certification Scheme (MCS). Due to technical issues on our secure platform, we were unable to run the calculations on all tiles. The results below represent 5km by 5km tile in Wolverhampton.
+    
+    """)
+
     column1, column2 = st.columns([2,2])
 
     with column1:
@@ -147,8 +176,8 @@ with tab2:
         st.write(f'☀️ Average solar pv output: {round(data["pv_output"].mean(),2)}')  
         st.write(f'🔆 Median solar pv output: {round(data["pv_output"].median(),2)}')  
 
-        pv_output = pd.DataFrame(data['pv_output'].value_counts())
-        st.bar_chart(pv_output)
+        fig = px.histogram(data, x="pv_output")
+        st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
     st.header("Heating Type ⚡️")
@@ -164,5 +193,5 @@ with tab3:
         st.write(f'⚡️Average additional load: {round(data["additional_peak_load"].mean(),2)}')  
         st.write(f'❓Predicted heating types: {round(data["predicted"].sum()/len(data)*100,2)}%')
 
-        additional_peak_load = pd.DataFrame(data['additional_peak_load'].value_counts())
-        st.bar_chart(pv_output)
+        fig = px.histogram(data, x="additional_peak_load")
+        st.plotly_chart(fig, use_container_width=True)
