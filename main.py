@@ -44,7 +44,7 @@ def EPC_map_data(df):
     
     df['fill_color'] = df[value].apply(lambda row: get_rgb(row, cmap, norm))
 
-    return df, norm
+    return df, cmap, norm
 
 @st.cache
 def pv_map_data(df):
@@ -58,7 +58,7 @@ def pv_map_data(df):
     
     df['fill_color'] = df[value].apply(lambda row: get_rgb(row, cmap, norm))
 
-    return df, norm
+    return df, cmap, norm
 
 @st.cache
 def heating_map_data(df):
@@ -67,12 +67,12 @@ def heating_map_data(df):
     df.geometry = listed_coords
     
     value = 'additional_peak_load'
-    cmap = matplotlib.cm.get_cmap('RdYlGn')
+    cmap = matplotlib.cm.get_cmap('RdYlGn_r')
     norm = matplotlib.colors.Normalize(vmin=df[value].quantile(0.05), vmax=df[value].quantile(0.95))
     
     df['fill_color'] = df[value].apply(lambda row: get_rgb(row, cmap, norm))
 
-    return df, norm
+    return df, cmap, norm
 
 def load_data(path):
     df = gpd.read_file(path, driver="GeoJSON")
@@ -108,8 +108,8 @@ with tab1:
     column1, column2 = st.columns([2,2])
 
     with column1:
-        epc_df, epc_norm = EPC_map_data(data)
-        render_map.app(epc_df, epc_norm,'Energy Efficiency')
+        epc_df, epc_cmap, epc_norm = EPC_map_data(data)
+        render_map.app(epc_df, epc_cmap, epc_norm,'Energy Efficiency')
 
     with column2:
         st.subheader('Area Summary')
@@ -166,8 +166,8 @@ with tab2:
     column1, column2 = st.columns([2,2])
 
     with column1:
-        pv_df, pv_norm = pv_map_data(data)
-        render_map.app(pv_df, pv_norm,'Solar PV Output (kWhr/year)')
+        pv_df, pv_cmap, pv_norm = pv_map_data(data)
+        render_map.app(pv_df, pv_cmap, pv_norm,'Solar PV Output (kWhr/year)')
 
     with column2:
         st.subheader('Area Summary')
@@ -180,11 +180,14 @@ with tab2:
 
 with tab3:
     st.header("Heating Type ⚡️")
+    st.markdown("""
+    We estimate the additional peak load and additional yearly load that will be put onto the electricity network if a home switches to a heat pump from a non-electric heating source. We first predicted the heating source using a random forest model with building height, floor area, energy consumption and location-based data as our input values. We extrapolated the additional energy consumption for homes of similar types from the EPC database to provide the additional yearly load that would be put onto the electricity network. Then, we used the national electricity demand with the yearly additional load value to determine the additional peak load for each home. This data can then be aggregated by substation distribution area so that the demand headroom for these stations can be compared to the additional load. This will determine if the substations need to be upgraded to handle the additional load.
+    """)
     column1, column2, column3 = st.columns([2,1,1])
 
     with column1:
-        heating_df, heating_norm = heating_map_data(data)
-        render_map.app(heating_df, heating_norm, 'Additional peak load (kWhr)')
+        heating_df, heating_cmap, heating_norm = heating_map_data(data)
+        render_map.app(heating_df, heating_cmap, heating_norm, 'Additional peak load (kWhr)')
 
     with column2:
         st.subheader('Area Summary')

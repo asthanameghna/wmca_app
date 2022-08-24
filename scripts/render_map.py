@@ -10,10 +10,9 @@ matplotlib.rcParams['xtick.color'] = 'white'
 matplotlib.rcParams['ytick.color'] = 'white'
 matplotlib.rcParams['font.size'] = 8
 
-def insert_color_bar(norm, value):    # Insert colour bar
+def insert_color_bar(cmap, norm, value):    # Insert colour bar
     fig, ax = plt.subplots(figsize=(6, 1))
     fig.subplots_adjust(bottom=0.5)
-    cmap = matplotlib.cm.get_cmap('RdYlGn')
     fig.colorbar(matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap),
                 cax=ax, orientation='horizontal', label=value, aspect=1, extend='both')
     fig.set_facecolor('none')
@@ -66,7 +65,7 @@ def plot_map(df):
             tooltip=tooltip,
         ))
     
-def app(df, norm, value):    
+def app(df, cmap, norm, value):    
     plot_map(df)
-    insert_color_bar(norm, value)
+    insert_color_bar(cmap, norm, value)
 
