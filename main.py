@@ -357,23 +357,23 @@ with tab3:
         st.write('Houses with Electric Heating: ', per_house)
 
 
+      ####### Uncoment to render table on Local device ######
 
+#     final = pd.DataFrame(sample_outputs.groupby(['original-local-authority'])['uprn'].count())
+#     final['local-authority-name'] = ['City of Bristol','Windsor and Maidenhead','Cannock Chase','Lichfield','South Staffordshire','North Warwickshire','Nuneaton and Bedworth','Rugby','Stratford-on-Avon','Warwick','Bromsgrove','Birmingham','Coventry','Dudley','Sandwell','Solihull','Walsall','Wolverhampton','Redbridge']
 
-    final = pd.DataFrame(sample_outputs.groupby(['original-local-authority'])['uprn'].count())
-    final['local-authority-name'] = ['City of Bristol','Windsor and Maidenhead','Cannock Chase','Lichfield','South Staffordshire','North Warwickshire','Nuneaton and Bedworth','Rugby','Stratford-on-Avon','Warwick','Bromsgrove','Birmingham','Coventry','Dudley','Sandwell','Solihull','Walsall','Wolverhampton','Redbridge']
+#     max_energy_output = []
+#     add_load = []
+#     elec_heat_per = []
+#     for loc in final['local-authority-name']:
+#         max_energy_output.append(get_max_energy_output(loc)/1000)
+#         add_load.append(get_add_load_output(loc))
+#         elec_heat_per.append(get_elec_heat_per(loc))
 
-    max_energy_output = []
-    add_load = []
-    elec_heat_per = []
-    for loc in final['local-authority-name']:
-        max_energy_output.append(get_max_energy_output(loc)/1000)
-        add_load.append(get_add_load_output(loc))
-        elec_heat_per.append(get_elec_heat_per(loc))
-
-    final['max-energy-output-MWh'] = max_energy_output
-    final['additional-load-kWh'] = add_load
-    final['electric-heating-percent'] = elec_heat_per
+#     final['max-energy-output-MWh'] = max_energy_output
+#     final['additional-load-kWh'] = add_load
+#     final['electric-heating-percent'] = elec_heat_per
 
     
-    st.table(final)
+#     st.table(final)
 
