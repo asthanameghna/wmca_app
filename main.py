@@ -132,8 +132,11 @@ data = load_data("data/data.geojson")
 pathname = './'  # your pathname  
 
 epc_data = get_data(pathname+'data/numerical_individual_columns_data_demo.csv')
+# epc_data = get_data(pathname+'data/numerical_individual_columns_data.csv') #for local device 
 sample_outputs = get_data(pathname+'data/sample_outputs_demo.csv')
+# sample_outputs = get_data(pathname+'data/sample_outputs.csv') #for local device
 predicted = get_data(pathname+'data/sample_outputs_old_demo.csv')
+# predicted = get_data(pathname+'data/sample_outputs_old.csv') #for local device
 sj9000 = get_data(pathname+'data/SJ9000_results.csv')
 
 with open('data/dictionaries/groups.pickle', 'rb') as handle:
@@ -162,7 +165,7 @@ with tab1:
 
     with column1:
         epc_df, epc_norm = EPC_map_data(data)
-####### Uncoment to render map ######        
+        ####### Uncoment to render map on Local device ######        
 #         render_map.app(epc_df, epc_norm, 'Current Energy Efficiency (%)')
 
     with column2:
@@ -228,32 +231,19 @@ with tab1:
         else:
             loc_auth_epc_rating.append('A')
     
-    distributions = []
-
-    
-  
-    #     dist = epc_count/loc_auth*100
-    #     distributions.append(dist)
-    # dont use group by just go for nested for / if
-
-    # for key,value in local_authority_tag.items():
-    #     st.write(key, ' : ', len(loc_auth.groups[key])) 
-    #     if (key,'C') in loc_auth_epc_dic:
-    #         st.write(len('C : ', loc_auth_epc.get_group((key,'C'))))
-
-    
-
-    final = pd.DataFrame(sample_outputs.groupby(['original-local-authority'])['uprn'].count())
-    final['local-authority-name'] = ['City of Bristol','Windsor and Maidenhead','Cannock Chase','Lichfield','South Staffordshire','North Warwickshire','Nuneaton and Bedworth','Rugby','Stratford-on-Avon','Warwick','Bromsgrove','Birmingham','Coventry','Dudley','Sandwell','Solihull','Walsall','Wolverhampton','Redbridge']
-    final['average-epc'] = loc_auth_eemean.astype(int)
-    final['average-epc-rating'] = loc_auth_epc_rating
-    #epc dist before this
-    final['pred-percentage'] = loc_auth_predpercent.astype(int)
 
 
+    ####### Uncoment to render table on Local device ######
 
-    # st.table(distributions)
-    st.table(final)
+#     final = pd.DataFrame(sample_outputs.groupby(['original-local-authority'])['uprn'].count())
+#     final['local-authority-name'] = ['City of Bristol','Windsor and Maidenhead','Cannock Chase','Lichfield','South Staffordshire','North Warwickshire','Nuneaton and Bedworth','Rugby','Stratford-on-Avon','Warwick','Bromsgrove','Birmingham','Coventry','Dudley','Sandwell','Solihull','Walsall','Wolverhampton','Redbridge']
+#     final['average-epc'] = loc_auth_eemean.astype(int)
+#     final['average-epc-rating'] = loc_auth_epc_rating
+#     #epc dist before this
+#     final['pred-percentage'] = loc_auth_predpercent.astype(int)
+
+   
+#     st.table(final)
 
 with tab2:
     st.header("Solar PV ☀️")
