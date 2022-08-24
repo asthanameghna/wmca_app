@@ -15,7 +15,7 @@ def insert_color_bar(norm, value):    # Insert colour bar
     fig.subplots_adjust(bottom=0.5)
     cmap = matplotlib.cm.get_cmap('RdYlGn')
     fig.colorbar(matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap),
-                cax=ax, orientation='horizontal', label=value, aspect=3, extend='both')
+                cax=ax, orientation='horizontal', label=value, aspect=20, extend='both')
     fig.set_facecolor('none')
     st.pyplot(fig)
 
