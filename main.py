@@ -131,9 +131,9 @@ data = load_data("data/data.geojson")
 
 pathname = './'  # your pathname  
 
-epc_data = get_data(pathname+'data/numerical_individual_columns_data.csv')
-sample_outputs = get_data(pathname+'data/sample_outputs.csv')
-predicted = get_data(pathname+'data/sample_outputs_old.csv')
+epc_data = get_data(pathname+'data/numerical_individual_columns_data_demo.csv')
+sample_outputs = get_data(pathname+'data/sample_outputs_demo.csv')
+predicted = get_data(pathname+'data/sample_outputs_old_demo.csv')
 sj9000 = get_data(pathname+'data/SJ9000_results.csv')
 
 with open('data/dictionaries/groups.pickle', 'rb') as handle:
