@@ -359,7 +359,7 @@ with tab3:
         st.write('Total output: ', per_output, ' MWh')
         st.write('Houses with Electric Heating: ', per_house)
 
-   st.write('Table available on Local Device only')
+    st.write('Table available on Local Device only')
       ####### Uncoment to render table on Local device ######
 
 #     final = pd.DataFrame(sample_outputs.groupby(['original-local-authority'])['uprn'].count())
