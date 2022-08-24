@@ -162,7 +162,8 @@ with tab1:
 
     with column1:
         epc_df, epc_norm = EPC_map_data(data)
-        render_map.app(epc_df, epc_norm, 'Current Energy Efficiency (%)')
+####### Uncoment to render map ######        
+#         render_map.app(epc_df, epc_norm, 'Current Energy Efficiency (%)')
 
     with column2:
         st.subheader('Area Summary')
@@ -263,7 +264,8 @@ with tab2:
 
     with column1:
         pv_df, pv_norm = pv_map_data(data)
-        render_map.app(pv_df, pv_norm, 'Current Solar PV Output (kWhr/year)')
+        ####### Uncoment to render map ###### 
+#         render_map.app(pv_df, pv_norm, 'Current Solar PV Output (kWhr/year)')
 
     with column2:
         st.subheader('Area Summary')
@@ -319,7 +321,8 @@ with tab3:
 
     with column1:
         heating_df, heating_norm = heating_map_data(data)
-        render_map.app(heating_df, heating_norm, 'Current Electric Heating Load (kWhr)')
+        ####### Uncoment to render map ###### 
+#         render_map.app(heating_df, heating_norm, 'Current Electric Heating Load (kWhr)')
 
     with column2:
         st.subheader('Area Summary')
