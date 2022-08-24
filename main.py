@@ -54,7 +54,7 @@ def pv_map_data(df):
     
     value = 'pv_output'
     cmap = matplotlib.cm.get_cmap('RdYlGn')
-    norm = matplotlib.colors.Normalize(vmin=df[value].quantile(0.05), vmax=df[value].quantile(0.95))
+    norm = matplotlib.colors.LogNorm(vmin=df[value].quantile(0.05), vmax=df[value].quantile(0.95))
     
     df['fill_color'] = df[value].apply(lambda row: get_rgb(row, cmap, norm))
 
@@ -102,7 +102,7 @@ tab1, tab2, tab3 = st.tabs(['EPC Rating 🏠', "Solar PV ☀️", "Heating Type 
 with tab1:
     st.header("EPC Rating 🏠")
     st.markdown("""
-    Only 40\% of the houses in the West Midlands have an Energy Performance Certificate (EPC). We predicted the remaining 60\% using a random forest and similarity quantification model (which matches houses based on similar features) with a 55.47\% accuracy. Our accuracy was severely limited by the computational power we had available.
+    Only 40\% of the houses in the West Midlands have an Energy Performance Certificate (EPC). We predicted the remaining 60\% using a random forest and similarity quantification model (which matches houses based on similar features) with a 55.47\% accuracy. We used building height, floor area, energy consumption and location-based data as our input values. Our accuracy was severely limited by the computational power we had available.
     
     """)
     column1, column2 = st.columns([2,2])
@@ -160,21 +160,20 @@ with tab1:
 with tab2:
     st.header("Solar PV ☀️")
     st.markdown("""
-    We estimated the annual solar PV output for houses in the West Midlands using the calculations from [pvlib](https://pvlib-python.readthedocs.io/en/stable/index.html) which are within the same order of magnitude as estimates given by the Microgeneration Certification Scheme (MCS). Due to technical issues on our secure platform, we were unable to run the calculations on all tiles. The results below represent 5km by 5km tile in Wolverhampton.
-    
+    We estimated the annual solar PV output for houses in the West Midlands using the calculations from [pvlib](https://pvlib-python.readthedocs.io/en/stable/index.html) which are within the same order of magnitude as estimates given by the Microgeneration Certification Scheme (MCS). The advantage of our method is that it does not require a site visit to get the roof slope, aspect, area and shading factor. However, due to technical issues on our secure platform, we were unable to run the calculations on all tiles. The results below represent 5km by 5km tile in Wolverhampton using pvlib.
     """)
 
     column1, column2 = st.columns([2,2])
 
     with column1:
         pv_df, pv_norm = pv_map_data(data)
-        render_map.app(pv_df, pv_norm,'Solar PV Output (kWhr/year')
+        render_map.app(pv_df, pv_norm,'Solar PV Output (kWhr/year)')
 
     with column2:
         st.subheader('Area Summary')
         st.write(f'🏠Total Houses: {len(data)}')
-        st.write(f'☀️ Average solar pv output: {round(data["pv_output"].mean(),2)}')  
-        st.write(f'🔆 Median solar pv output: {round(data["pv_output"].median(),2)}')  
+        st.write(f'☀️ Average solar pv output: {round(data["pv_output"].mean(),2)} kWhr/year')  
+        st.write(f'🔆 Median solar pv output: {round(data["pv_output"].median(),2)}kWhr/year')  
 
         fig = px.histogram(data, x="pv_output")
         st.plotly_chart(fig, use_container_width=True)
@@ -190,7 +189,7 @@ with tab3:
     with column2:
         st.subheader('Area Summary')
         st.write(f'🏠Total Houses: {len(data)}')
-        st.write(f'⚡️Average additional load: {round(data["additional_peak_load"].mean(),2)}')  
+        st.write(f'⚡️Average additional load: {round(data["additional_peak_load"].mean(),2)} kWhr')  
         st.write(f'❓Predicted heating types: {round(data["predicted"].sum()/len(data)*100,2)}%')
 
         fig = px.histogram(data, x="additional_peak_load")
